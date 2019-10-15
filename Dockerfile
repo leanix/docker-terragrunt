@@ -1,6 +1,6 @@
 FROM alpine
 
-ENV TERRAFORM_VERSION=0.12.9
+ENV TERRAFORM_VERSION=0.12.10
 ENV TERRAGRUNT_VERSION=0.19.25
 
 RUN apk add --update git bash openssh curl
