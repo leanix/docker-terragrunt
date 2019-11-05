@@ -3,7 +3,10 @@ FROM golang:1.13.1-alpine
 ENV TERRAFORM_VERSION=0.12.10
 ENV TERRAGRUNT_VERSION=0.20.4
 
-RUN apk add --update git bash openssh curl build-base
+RUN apk add --update git bash openssh curl build-base py-pip python-dev libffi-dev libressl-dev && \
+    pip --no-cache-dir install -U pip && \
+    pip --no-cache-dir install azure-cli && \
+    az aks install-cli
 
 RUN cd /tmp && \
     curl -Lo terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
