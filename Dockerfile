@@ -19,13 +19,6 @@ RUN cd /tmp && \
 RUN curl -Lo /usr/local/bin/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 && \
     chmod a+x /usr/local/bin/terragrunt
 
-RUN cd /tmp && \
-    curl -Lo consul.zip https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip && \
-    unzip consul.zip && \
-    rm consul.zip && \
-    mv consul /usr/local/bin/consul && \
-    chmod a+x /usr/local/bin/consul
-
 RUN mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
 ENTRYPOINT ["/usr/local/bin/terragrunt"]
