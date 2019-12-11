@@ -2,7 +2,7 @@ FROM golang:1.13.1-alpine
 
 ENV TERRAFORM_VERSION=0.12.10
 ENV TERRAGRUNT_VERSION=0.20.4
-ENV ISTIO_VERSION=1.4.1
+ENV ISTIO_VERSION=1.4.2
 
 RUN apk add --update git bash openssh curl build-base py-pip python-dev libffi-dev libressl-dev && \
     pip --no-cache-dir install -U pip && \
