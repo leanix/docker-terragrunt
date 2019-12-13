@@ -1,10 +1,10 @@
 FROM golang:1.13.1-alpine
 
-ENV TERRAFORM_VERSION=0.12.10
-ENV TERRAGRUNT_VERSION=0.20.4
+ENV TERRAFORM_VERSION=0.12.18
+ENV TERRAGRUNT_VERSION=0.21.9
 ENV ISTIO_VERSION=1.4.2
 
-RUN apk add --update git bash openssh curl build-base py-pip python-dev libffi-dev libressl-dev && \
+RUN apk add --update git bash openssh openssl curl build-base py-pip python-dev libffi-dev libressl-dev && \
     pip --no-cache-dir install -U pip && \
     pip --no-cache-dir install azure-cli && \
     az aks install-cli
