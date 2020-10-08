@@ -26,6 +26,8 @@ jobs:
       - name: Build and push image
         id: build-image
         uses: leanix/release-docker-image-action@master
+        with:
+          name: leanix/terragrunt
 
       - name: Send build fail message
         if: failure()
