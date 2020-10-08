@@ -28,7 +28,7 @@ jobs:
         uses: leanix/release-docker-image-action@master
 
       - name: Send build fail message
-        if: failure() && github.ref=='refs/heads/master'
+        if: failure()
         uses: archive/github-actions-slack@v1.0.0
         with:
           slack-bot-user-oauth-access-token: ${{ env.SLACK_TOKEN }}
