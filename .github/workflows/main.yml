@@ -32,7 +32,7 @@ jobs:
         uses: archive/github-actions-slack@v1.0.0
         with:
           slack-bot-user-oauth-access-token: ${{ env.SLACK_TOKEN }}
-          slack-channel: '#team-atlas'
+          slack-channel: '#team-atlas-notifications'
           slack-text: |
             :thumbsdown: ${{ github.repository }} could not be build in the next version ${{ steps.build-image.outputs.tag }}
             ${{ env.ACTION_URL }}
