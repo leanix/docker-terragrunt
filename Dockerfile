@@ -1,10 +1,9 @@
-FROM golang:1.13.1-alpine
+FROM golang:1.15.6-alpine3.12
 
-ENV TERRAFORM_VERSION=0.12.18
-ENV TERRAGRUNT_VERSION=0.21.9
-ENV ISTIO_VERSION=1.4.2
+ENV TERRAFORM_VERSION=0.13.4
+ENV TERRAGRUNT_VERSION=0.25.2
 
-RUN apk add --update git bash openssh openssl curl build-base py-pip python-dev libffi-dev libressl-dev && \
+RUN apk add --update git bash openssh openssl curl build-base py-pip python3-dev libffi-dev libressl-dev && \
     pip --no-cache-dir install -U pip && \
     pip --no-cache-dir install azure-cli && \
     az aks install-cli
@@ -18,12 +17,6 @@ RUN cd /tmp && \
 
 RUN curl -Lo /usr/local/bin/terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64 && \
     chmod a+x /usr/local/bin/terragrunt
-
-RUN curl -Lo istioctl.tar.gz https://github.com/istio/istio/releases/download/${ISTIO_VERSION}/istio-${ISTIO_VERSION}-linux.tar.gz && \
-    tar -zxvf istioctl.tar.gz && \
-    mv istio-${ISTIO_VERSION}/bin/istioctl /usr/local/bin/istioctl && \
-    rm -r istioctl.tar.gz istio-${ISTIO_VERSION} && \
-    chmod a+x /usr/local/bin/istioctl
 
 RUN mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
