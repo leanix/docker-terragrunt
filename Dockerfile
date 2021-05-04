@@ -1,7 +1,7 @@
-FROM python:3.9.0-buster
+FROM python:3.9.4-buster
 
-ENV TERRAFORM_VERSION=0.13.4
-ENV TERRAGRUNT_VERSION=0.25.2
+ENV TERRAFORM_VERSION=0.15.1
+ENV TERRAGRUNT_VERSION=0.29.2
 
 RUN pip --no-cache-dir install azure-cli && \
     az aks install-cli
