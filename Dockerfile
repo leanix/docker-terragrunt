@@ -1,10 +1,13 @@
-FROM python:3.9.4-buster
+FROM golang:1.15.11-alpine3.13
 
 ENV TERRAFORM_VERSION=0.15.1
 ENV TERRAGRUNT_VERSION=0.29.2
 
-RUN pip --no-cache-dir install azure-cli && \
-    az aks install-cli
+RUN apk add --update git bash openssh openssl curl build-base py-pip python3-dev libffi-dev libressl-dev && \
+    pip --no-cache-dir install -U pip && \
+    pip --no-cache-dir install azure-cli && \
+    az aks install-cli && \
+    rm -rf /var/cache/apk/*
 
 RUN cd /tmp && \
     curl -Lo terraform.zip https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
