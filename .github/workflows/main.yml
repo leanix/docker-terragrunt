@@ -1,7 +1,7 @@
 name: docker-terragrunt
 
 on:
-  repository_dispatch:
+  workflow_dispatch:
     types: [trigger-docker-terragrunt]
   push:
     paths-ignore:
@@ -28,13 +28,14 @@ jobs:
         uses: leanix/release-docker-image-action@master
         with:
           name: leanix/terragrunt
+          registry: acr-public
 
       - name: Send build fail message
         if: failure()
         uses: archive/github-actions-slack@v1.0.0
         with:
           slack-bot-user-oauth-access-token: ${{ env.SLACK_TOKEN }}
-          slack-channel: '#team-atlas-notifications'
+          slack-channel: '#team-hook-builds'
           slack-text: |
             :thumbsdown: ${{ github.repository }} could not be build in the next version ${{ steps.build-image.outputs.tag }}
             ${{ env.ACTION_URL }}
