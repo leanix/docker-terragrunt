@@ -1,0 +1,40 @@
+name: docker-terragrunt
+
+on:
+  repository_dispatch:
+    types: [trigger-docker-terragrunt]
+  push:
+    paths-ignore:
+      - '**README.md'
+
+env:
+  ACTION_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+jobs:
+  main:
+    name: docker-terragrunt-${{ github.run_number }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get credentials
+        uses: leanix/secrets-action@master
+        with:
+          secret-store-credentials: ${{ secrets.INJECTED_SECRET_STORE_CREDENTIALS }}
+
+      - name: Build and push image
+        id: build-image
+        uses: leanix/release-docker-image-action@master
+        with:
+          name: leanix/terragrunt
+
+      - name: Send build fail message
+        if: failure()
+        uses: archive/github-actions-slack@v1.0.0
+        with:
+          slack-bot-user-oauth-access-token: ${{ env.SLACK_TOKEN }}
+          slack-channel: '#team-atlas-notifications'
+          slack-text: |
+            :thumbsdown: ${{ github.repository }} could not be build in the next version ${{ steps.build-image.outputs.tag }}
+            ${{ env.ACTION_URL }}
